@@ -51,7 +51,7 @@ void drawMap(int size, int map[size][size][size], GLfloat* position, GLfloat* ro
 
 	glRotatef(rotation[0], 0.0f, 1.0f, 0.0f);
 	glRotatef(rotation[1], cos(rotation[0] * DEG_TO_RAD), 0.0f, sin(rotation[0] * DEG_TO_RAD));
-	glTranslatef(-position[0], -position[1], -position[2]);
+	glTranslatef(-position[0], -position[1]-1.5f, -position[2]);
 
 	for(i = 0; i < size; ++i)
 		for(j = 0; j < size; ++j)
