@@ -16,7 +16,7 @@ void InitGL(int Width, int Height) // Tuto funkci voláme hned po vytvoření ok
 		SDL_Quit();
 		exit(3);
 	}
-	SDL_WM_SetCaption("Sokoban 3D", NULL); // Titulek okna
+	SDL_WM_SetCaption("Quadrax 3D", NULL); // Titulek okna
 
 	glViewport(0, 0, Width, Height);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Černé pozadí
