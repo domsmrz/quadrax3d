@@ -1,21 +1,34 @@
-#include <stdio.h>
 #include <math.h>
 
 #include "main_sdl.h"
 #include "init.h"
 #include "draw.h"
 
+#define MAP_SIZE 10
+
 GLfloat position[3]; // Position of player
 GLfloat rotation[2]; // Rotation of player
+int map[MAP_SIZE][MAP_SIZE][MAP_SIZE];
 
 void loadMap()
 {
-	position[0] = 0;
-	position[1] = 0;
-	position[2] = 2;
+	FILE* map_file = fopen("map.map", "r");
+	int i, j, k, a, b, c;
+
+	fscanf(map_file, "%d%d%d", &a, &b, &c);
+	position[0] = (float) a + 0.5f;
+	position[1] = (float) b;
+	position[2] = (float) c + 0.5f;
 
 	rotation[0] = 0;
 	rotation[1] = 0;
+
+	for(i = 0; i < MAP_SIZE; ++i)
+		for(j = 0; j < MAP_SIZE; ++j)
+			for(k = 0; k < MAP_SIZE; ++k)
+				fscanf(map_file, "%d", &map[i][j][k]);
+
+	fclose(map_file);
 
 	return;
 }
@@ -25,7 +38,7 @@ void DrawGLScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Vymazání obrazovkového a hloubkového bufferu
 	glLoadIdentity(); // Reset matice pohledu
 
-	drawMap(position, rotation);
+	drawMap(MAP_SIZE, map, position, rotation);
 
 	SDL_GL_SwapBuffers(); // Prohozeni bufferu, aby se zobrazilo, co jsme nakreslili
 
