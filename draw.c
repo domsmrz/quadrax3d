@@ -1,3 +1,6 @@
+#include <math.h>
+
+#include "macros.h"
 #include "main_sdl.h"
 
 void drawSquare(GLfloat ax, GLfloat ay, GLfloat az, GLfloat bx, GLfloat by, GLfloat bz)
@@ -47,7 +50,7 @@ void drawMap(int size, int map[size][size][size], GLfloat* position, GLfloat* ro
 	int i, j, k;
 
 	glRotatef(rotation[0], 0.0f, 1.0f, 0.0f);
-	glRotatef(rotation[1], 1.0f, 0.0f, 0.0f);
+	glRotatef(rotation[1], cos(rotation[0] * DEG_TO_RAD), 0.0f, sin(rotation[0] * DEG_TO_RAD));
 	glTranslatef(-position[0], -position[1], -position[2]);
 
 	for(i = 0; i < size; ++i)

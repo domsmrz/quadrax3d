@@ -1,5 +1,6 @@
 #include <math.h>
 
+#include "macros.h"
 #include "main_sdl.h"
 #include "init.h"
 #include "draw.h"
@@ -47,10 +48,9 @@ void DrawGLScene()
 
 void move(int direction)
 {
-	const float degtorad = 0.0174532925f;
 	float myrot = rotation[0] + direction;
-	position[0] += 0.1f * sin(myrot * degtorad);
-	position[2] -= 0.1f * cos(myrot * degtorad);
+	position[0] += 0.1f * sin(myrot * DEG_TO_RAD);
+	position[2] -= 0.1f * cos(myrot * DEG_TO_RAD);
 
 	return;
 }
