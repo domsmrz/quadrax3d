@@ -1,14 +1,20 @@
 
 
+CFLAGS+=$(shell sdl-config --libs --cflags) -W -Wall -std=gnu99
+LIBS+=$(shell sdl-config --libs --cflags) -lGL -lGLU
+
 
 quadrax3d: game.o init.o draw.o
-	gcc -o quadrax3d game.o init.o draw.o `sdl-config --libs --cflags` -lGL -lGLU
+	gcc -o quadrax3d game.o init.o draw.o $(LIBS)
 
 game.o: game.c init.h draw.h main_sdl.h macros.h
-	gcc -W -Wall -std=gnu99 -c game.c `sdl-config --libs --cflags` -lGL -lGLU
+	gcc -c game.c $(CFLAGS)
 
 init.o: init.c main_sdl.h
-	gcc -W -Wall -std=gnu99 -c init.c `sdl-config --libs --cflags` -lGL -lGLU
+	gcc -c init.c $(CFLAGS)
 
 draw.o: draw.c main_sdl.h macros.h
-	gcc -W -Wall -std=gnu99 -c draw.c `sdl-config --libs --cflags` -lGL -lGLU
+	gcc -c draw.c $(CFLAGS)
+
+clean:
+	rm -f quadrax3d *.o
