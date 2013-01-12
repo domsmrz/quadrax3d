@@ -11,6 +11,25 @@ GLfloat position[3]; // Position of player
 GLfloat rotation[2]; // Rotation of player
 int map[MAP_SIZE][MAP_SIZE][MAP_SIZE];
 
+void dumpPosition()
+{
+	printf("Position: %f; %f; %f\n", position[0], position[1], position[2]);
+	printf("Rotation: %f; %f\n", rotation[0], rotation[1]);
+	return;
+}
+
+void dumpMap()
+{
+	int i, j;
+	for(i = 0; i < 10; ++i) {
+		for(j = 0; j < 10; ++j) {
+			printf("%d", map[i][0][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
 void loadMap()
 {
 	FILE* map_file = fopen("map.map", "r");
@@ -46,19 +65,40 @@ void DrawGLScene()
 	return;
 }
 
-void move(int direction)
+int checkPosition(GLfloat x, GLfloat y, GLfloat z)
 {
-	float myrot = rotation[0] + direction;
-	position[0] += 0.1f * sin(myrot * DEG_TO_RAD);
-	position[2] -= 0.1f * cos(myrot * DEG_TO_RAD);
+	int ix = (int) x;
+	int iy = (int) y;
+	int iz = (int) z;
 
-	return;
+	if(map[ix][iy][iz] == 0)
+		return 1;
+	else
+		return 0;
 }
 
-void dumpPosition()
+void move(int direction)
 {
-	printf("Position: %f; %f; %f\n", position[0], position[1], position[2]);
-	printf("Rotation: %f; %f\n", rotation[0], rotation[1]);
+	int check[2][2];
+
+	float myrot = rotation[0] + direction;
+
+	GLfloat new_position[3];
+	new_position[0] = position[0] + 0.1f * sin(myrot * DEG_TO_RAD);
+	new_position[1] = position[1];
+	new_position[2] = position[2] - 0.1f * cos(myrot * DEG_TO_RAD);
+
+	check[0][0] = checkPosition(new_position[0] - 0.2f, new_position[1], new_position[2] - 0.2f);
+	check[0][1] = checkPosition(new_position[0] - 0.2f, new_position[1], new_position[2] + 0.2f);
+	check[1][0] = checkPosition(new_position[0] + 0.2f, new_position[1], new_position[2] - 0.2f);
+	check[1][1] = checkPosition(new_position[0] + 0.2f, new_position[1], new_position[2] + 0.2f);
+
+	if(check[0][0] && check[0][1] && check[1][0] && check[1][1]) {
+		position[0] = new_position[0];
+		position[1] = new_position[1];
+		position[2] = new_position[2];
+	}
+
 	return;
 }
 
@@ -72,6 +112,9 @@ void handleKeyPress(SDL_keysym *keysym)
 			break;
 		case SDLK_e:
 			dumpPosition();
+			break;
+		case SDLK_m:
+			dumpMap();
 			break;
 
 		// Rotations
