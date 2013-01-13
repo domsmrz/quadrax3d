@@ -77,6 +77,18 @@ int checkPosition(GLfloat x, GLfloat y, GLfloat z)
 		return 0;
 }
 
+GLfloat makeGoodPosition(GLfloat old, GLfloat new)
+{
+	GLfloat good = (float) ((int) old);
+
+	if(new > old)
+		good += 0.8f;
+	else
+		good += 0.2f;
+
+	return good;
+}
+
 void move(int direction)
 {
 	int check[2][2];
@@ -97,6 +109,30 @@ void move(int direction)
 		position[0] = new_position[0];
 		position[1] = new_position[1];
 		position[2] = new_position[2];
+	}
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 1) {
+		position[0] = makeGoodPosition(position[0], new_position[0]);
+		position[1] = new_position[1];
+		position[2] = makeGoodPosition(position[2],new_position[2]);
+	}
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 2) {
+		if((check[0][0] && check[0][1]) || (check[1][0] && check[1][1])) {
+			position[0] = makeGoodPosition(position[0], new_position[0]);
+			position[1] = new_position[1];
+			position[2] = new_position[2];
+		}
+		else if((check[0][0] && check[1][0]) || (check[0][1] && check[1][1])) {
+			position[0] = new_position[0];
+			position[1] = new_position[1];
+			position[2] = makeGoodPosition(position[2], new_position[2]);
+		}
+		else if((check[0][0] && check[1][1]) || (check[0][1] && check[1][0])) {
+			position[0] = makeGoodPosition(position[0], new_position[0]);
+			position[1] = new_position[1];
+			position[2] = makeGoodPosition(position[2],new_position[2]);
+		}
+	}
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 3) {
 	}
 
 	return;
