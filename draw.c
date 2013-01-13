@@ -45,7 +45,7 @@ void drawBlock1x1(GLfloat x, GLfloat y, GLfloat z)
 	drawSquare(1.0f+x, 0.0f+y, 0.0f+z, 1.0f+x, 1.0f+y, 1.0f+z);
 }
 
-void drawMap(int size, int map[size][size][size], GLfloat* position, GLfloat* rotation)
+void drawMap(int size, int map[size][size][size], GLfloat* position, int* rotation)
 {
 	int i, j, k;
 
