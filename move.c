@@ -3,7 +3,7 @@
 #include "main_sdl.h"
 #include "macros.h"
 
-int checkPosition(int map[MAP_SIZE][MAP_SIZE][MAP_SIZE], GLfloat x, GLfloat y, GLfloat z)
+int checkPosition(int map_size, int map[map_size][map_size][map_size], GLfloat x, GLfloat y, GLfloat z)
 {
 	int ix = (int) x;
 	int iy = (int) y;
@@ -34,7 +34,7 @@ void changeToGoodPosition(GLfloat position[3], GLfloat new_position[3], int x, i
 	return;
 }
 
-void move(GLfloat position[3], int rotation[2], int map[MAP_SIZE][MAP_SIZE][MAP_SIZE], int direction)
+void move(GLfloat position[3], int rotation[2], int map_size, int map[map_size][map_size][map_size], int direction)
 {
 	int check[2][2];
 
@@ -45,10 +45,10 @@ void move(GLfloat position[3], int rotation[2], int map[MAP_SIZE][MAP_SIZE][MAP_
 	new_position[1] = position[1];
 	new_position[2] = position[2] - 0.1f * cos(myrot * DEG_TO_RAD);
 
-	check[0][0] = checkPosition(map, new_position[0] - 0.2f, new_position[1], new_position[2] - 0.2f);
-	check[0][1] = checkPosition(map, new_position[0] - 0.2f, new_position[1], new_position[2] + 0.2f);
-	check[1][0] = checkPosition(map, new_position[0] + 0.2f, new_position[1], new_position[2] - 0.2f);
-	check[1][1] = checkPosition(map, new_position[0] + 0.2f, new_position[1], new_position[2] + 0.2f);
+	check[0][0] = checkPosition(map_size, map, new_position[0] - 0.2f, new_position[1], new_position[2] - 0.2f);
+	check[0][1] = checkPosition(map_size, map, new_position[0] - 0.2f, new_position[1], new_position[2] + 0.2f);
+	check[1][0] = checkPosition(map_size, map, new_position[0] + 0.2f, new_position[1], new_position[2] - 0.2f);
+	check[1][1] = checkPosition(map_size, map, new_position[0] + 0.2f, new_position[1], new_position[2] + 0.2f);
 
 	if(check[0][0] && check[0][1] && check[1][0] && check[1][1]) {
 		changeToGoodPosition(position, new_position, 0, 0, 0);

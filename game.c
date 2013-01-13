@@ -4,6 +4,7 @@
 #include "move.h"
 #include "draw.h"
 
+#define MAP_SIZE 10
 
 GLfloat position[3]; // Position of player
 int rotation[2]; // Rotation of player
@@ -102,16 +103,16 @@ void handleKeyPress(SDL_keysym *keysym)
 
 		// Moves
 		case SDLK_w:
-			move(position, rotation, map, 0);
+			move(position, rotation, MAP_SIZE, map, 0);
 			break;
 		case SDLK_s:
-			move(position, rotation, map, 180);
+			move(position, rotation, MAP_SIZE, map, 180);
 			break;
 		case SDLK_a:
-			move(position, rotation, map, 270);
+			move(position, rotation, MAP_SIZE, map, 270);
 			break;
 		case SDLK_d:
-			move(position, rotation, map, 90);
+			move(position, rotation, MAP_SIZE, map, 90);
 			break;
 		default:
 			break;
