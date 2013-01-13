@@ -89,6 +89,13 @@ GLfloat makeGoodPosition(GLfloat old, GLfloat new)
 	return good;
 }
 
+void changeToGoodPosition(GLfloat position[3], GLfloat new_position[3], int x, int y, int z) {
+	position[0] = (x ? makeGoodPosition(position[0], new_position[0]) : new_position[0]);
+	position[1] = (y ? makeGoodPosition(position[1], new_position[1]) : new_position[1]);
+	position[2] = (z ? makeGoodPosition(position[2], new_position[2]) : new_position[2]);
+	return;
+}
+
 void move(int direction)
 {
 	int check[2][2];
@@ -106,33 +113,39 @@ void move(int direction)
 	check[1][1] = checkPosition(new_position[0] + 0.2f, new_position[1], new_position[2] + 0.2f);
 
 	if(check[0][0] && check[0][1] && check[1][0] && check[1][1]) {
-		position[0] = new_position[0];
-		position[1] = new_position[1];
-		position[2] = new_position[2];
+		changeToGoodPosition(position, new_position, 0, 0, 0);
 	}
 	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 1) {
-		position[0] = makeGoodPosition(position[0], new_position[0]);
-		position[1] = new_position[1];
-		position[2] = makeGoodPosition(position[2],new_position[2]);
+		changeToGoodPosition(position, new_position, 1, 0, 1);
 	}
 	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 2) {
-		if((check[0][0] && check[0][1]) || (check[1][0] && check[1][1])) {
-			position[0] = makeGoodPosition(position[0], new_position[0]);
-			position[1] = new_position[1];
-			position[2] = new_position[2];
-		}
-		else if((check[0][0] && check[1][0]) || (check[0][1] && check[1][1])) {
-			position[0] = new_position[0];
-			position[1] = new_position[1];
-			position[2] = makeGoodPosition(position[2], new_position[2]);
-		}
-		else if((check[0][0] && check[1][1]) || (check[0][1] && check[1][0])) {
-			position[0] = makeGoodPosition(position[0], new_position[0]);
-			position[1] = new_position[1];
-			position[2] = makeGoodPosition(position[2],new_position[2]);
-		}
+		if((check[0][0] && check[0][1]) || (check[1][0] && check[1][1]))
+			changeToGoodPosition(position, new_position, 1, 0, 0);
+		else if((check[0][0] && check[1][0]) || (check[0][1] && check[1][1]))
+			changeToGoodPosition(position, new_position, 0, 0, 1);
+		else if((check[0][0] && check[1][1]) || (check[0][1] && check[1][0]))
+			changeToGoodPosition(position, new_position, 1, 0, 1);
 	}
 	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 3) {
+		if(((check[0][0] || check[0][1]) && (position[0] < new_position[0])) ||
+				((check[1][0] || check[1][1]) && (position[0] > new_position[0])))
+			changeToGoodPosition(position, new_position, 0, 0, 1);
+		else if(((check[0][0] || check[1][0]) && (position[2] < new_position[2])) ||
+				((check[0][1] || check[1][1]) && (position[2] > new_position[2])))
+			changeToGoodPosition(position, new_position, 1, 0, 0);
+		else {
+			int x = (int) position[0];
+			if(abs(x - position[0]) + abs(x - new_position[0]) > 0.5f)
+				x += 1;
+			int z = (int) position[2];
+			if(abs(z - position[0]) + abs(z - new_position[0]) > 0.5f)
+				z += 1;
+			if(abs(((float) x - position[0]) / ((float) z - position[2])) >
+					abs(((float) x - new_position[0]) / ((float) z - new_position[2])))
+				changeToGoodPosition(position, new_position, 1, 0, 0);
+			else
+				changeToGoodPosition(position, new_position, 0, 0, 2);
+		}
 	}
 
 	return;
