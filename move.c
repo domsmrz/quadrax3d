@@ -50,13 +50,13 @@ void move(GLfloat position[3], int rotation[2], int map_size, int map[map_size][
 	check[1][0] = checkPosition(map_size, map, new_position[0] + 0.2f, new_position[1], new_position[2] - 0.2f);
 	check[1][1] = checkPosition(map_size, map, new_position[0] + 0.2f, new_position[1], new_position[2] + 0.2f);
 
-	if(check[0][0] && check[0][1] && check[1][0] && check[1][1]) {
+	if(check[0][0] && check[0][1] && check[1][0] && check[1][1]) { // If we go to a free place
 		changeToGoodPosition(position, new_position, 0, 0, 0);
 	}
-	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 1) {
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 1) { // If we go to a conner
 		changeToGoodPosition(position, new_position, 1, 0, 1);
 	}
-	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 2) {
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 2) { // If we hit one side of an obstacle
 		if((check[0][0] && check[0][1]) || (check[1][0] && check[1][1]))
 			changeToGoodPosition(position, new_position, 1, 0, 0);
 		else if((check[0][0] && check[1][0]) || (check[0][1] && check[1][1]))
@@ -64,14 +64,14 @@ void move(GLfloat position[3], int rotation[2], int map_size, int map[map_size][
 		else if((check[0][0] && check[1][1]) || (check[0][1] && check[1][0]))
 			changeToGoodPosition(position, new_position, 1, 0, 1);
 	}
-	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 3) {
-		if(((check[0][0] || check[0][1]) && (position[0] < new_position[0])) ||
+	else if(check[0][0] + check[0][1] + check[1][0] + check[1][1] == 3) { // If we hit exactly conner of an obstacle
+		if(((check[0][0] || check[0][1]) && (position[0] < new_position[0])) || // If we go to the middle of the obstacle
 				((check[1][0] || check[1][1]) && (position[0] > new_position[0])))
 			changeToGoodPosition(position, new_position, 0, 0, 1);
-		else if(((check[0][0] || check[1][0]) && (position[2] < new_position[2])) ||
+		else if(((check[0][0] || check[1][0]) && (position[2] < new_position[2])) || // IF we go to the middle of the obstacle
 				((check[0][1] || check[1][1]) && (position[2] > new_position[2])))
 			changeToGoodPosition(position, new_position, 1, 0, 0);
-		else {
+		else { // If we go around the obstacle
 			int x = (int) position[0];
 			if(abs(x - position[0]) + abs(x - new_position[0]) > 0.5f)
 				x += 1;
