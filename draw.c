@@ -88,7 +88,6 @@ void drawSquareTextured(GLfloat ax, GLfloat ay, GLfloat az, GLfloat bx, GLfloat 
 
 void drawBlock1x1(GLfloat x, GLfloat y, GLfloat z)
 {
-	glColor3f(0.0f, 1.0f, 0.0f);
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	drawSquareTextured(0.0f+x, 0.0f+y, 1.0f+z, 0.0f+x, 1.0f+y, 0.0f+z); // levá stěna
 	drawSquareTextured(0.0f+x, 0.0f+y, 0.0f+z, 1.0f+x, 1.0f+y, 0.0f+z); // přední stěna
