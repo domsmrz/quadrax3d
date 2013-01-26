@@ -1,7 +1,7 @@
 
 
-CFLAGS+=$(shell sdl-config --libs --cflags) -W -Wall -std=gnu99
-LIBS+=$(shell sdl-config --libs --cflags) -lGL -lGLU
+CFLAGS+=$(shell sdl-config --cflags) -W -Wall -std=gnu99
+LIBS+=$(shell sdl-config --libs) -lSDL_image -lGL -lGLU
 
 
 quadrax3d: game.o move.o init.o draw.o

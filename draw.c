@@ -10,13 +10,12 @@ void loadTexture()
 	GLuint texture;
 	SDL_Surface* image;
 
-	image = SDL_LoadBMP("graphics/base.bmp");
-	//image = IMG_Load("graphics/base.png");
+	image = IMG_Load("graphics/base.png");
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, 3, image->w, image->h, 0, GL_BGR, GL_UNSIGNED_BYTE, image->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
