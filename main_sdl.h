@@ -13,5 +13,6 @@
 	#include <GL/glu.h> // Hlavičkový soubor pro GLu32 knihovnu
 #endif
 #include "SDL.h" // Hlavičkový soubor pro SDL
+#include "SDL_image.h"
 
 #endif

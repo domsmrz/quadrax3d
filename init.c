@@ -1,4 +1,5 @@
 #include "main_sdl.h"
+#include "draw.h"
 
 void InitGL(int Width, int Height) // Tuto funkci voláme hned po vytvoření okna pro inicializace OpenGL
 {
@@ -18,14 +19,18 @@ void InitGL(int Width, int Height) // Tuto funkci voláme hned po vytvoření ok
 	}
 	SDL_WM_SetCaption("Quadrax 3D", NULL); // Titulek okna
 
+	glEnable(GL_TEXTURE_2D); // Zapne mapování textur
 	glViewport(0, 0, Width, Height);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Černé pozadí
 	glClearDepth(1.0); // Povolíme mazání pozadí
 	glDepthFunc(GL_LESS); // Vybereme typ Depth Testu
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);// Nejlepší perspektivní korekce
 	glEnable(GL_DEPTH_TEST); // Povolíme Depth Test
 	glShadeModel(GL_SMOOTH); // Povolíme Smooth Color Shading
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity(); // Resetujeme projekční matici
 	gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f); // Vypočítáme poměr okna
 	glMatrixMode(GL_MODELVIEW);
+
+	loadTexture();
 }
