@@ -82,7 +82,7 @@ void move(GLfloat position[3], int rotation[2], int map_size, int map[map_size][
 					abs(((float) x - new_position[0]) / ((float) z - new_position[2])))
 				changeToGoodPosition(position, new_position, 1, 0, 0);
 			else
-				changeToGoodPosition(position, new_position, 0, 0, 2);
+				changeToGoodPosition(position, new_position, 0, 0, 1);
 		}
 	}
 
