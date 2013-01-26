@@ -68,7 +68,7 @@ void move(GLfloat position[3], int rotation[2], int map_size, int map[map_size][
 		if(((check[0][0] || check[0][1]) && (position[0] < new_position[0])) || // If we go to the middle of the obstacle
 				((check[1][0] || check[1][1]) && (position[0] > new_position[0])))
 			changeToGoodPosition(position, new_position, 0, 0, 1);
-		else if(((check[0][0] || check[1][0]) && (position[2] < new_position[2])) || // IF we go to the middle of the obstacle
+		else if(((check[0][0] || check[1][0]) && (position[2] < new_position[2])) || // If we go to the middle of the obstacle
 				((check[0][1] || check[1][1]) && (position[2] > new_position[2])))
 			changeToGoodPosition(position, new_position, 1, 0, 0);
 		else { // If we go around the obstacle
